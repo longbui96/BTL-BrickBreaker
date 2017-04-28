@@ -14,6 +14,7 @@ public class UiManager : MonoBehaviour {
     public GameObject BallOut;
     public GameObject GameOver;
     public GameObject YouWon;
+    public GameObject BottomWall;
 
     private GameObject ClonePaddle;
     private GameObject CloneBallOut;
@@ -29,15 +30,36 @@ public class UiManager : MonoBehaviour {
         Destroy(CloneBallOut);
     }
 
-	// Update is called once per frame
-	void Update () {
+    private void Reset()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
+
+    void CheckOver()
+    {
+        if (lives < 1)
+        {
+            GameOver.SetActive(true);
+            Invoke("Reset",3f);
+        }
+        else if (bricks < 1)
+        {
+            YouWon.SetActive(true);
+            BottomWall.SetActive(true);
+            Invoke("Reset",3f);
+        }
+    }
 
 	public void IncrementScore(){
 		score++;
         bricks--;
 		scoreText.text = "Score: " + score;
+        CheckOver();
 	}
 
     public void OutBall()
@@ -45,6 +67,7 @@ public class UiManager : MonoBehaviour {
         lives--;
         LivesText.text = "Lives: " + lives;
         Destroy(ClonePaddle);
+        CheckOver();
         CloneBallOut = Instantiate(BallOut, Paddle.transform.position, Quaternion.identity);
         Invoke("Setup", 3f);
     }
