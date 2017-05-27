@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour {
 
-	int score = 0;
+	public int score = 0;
     int bricks = 24;
     int lives = 3;
+    public int combo;
+    public int row;
 	public Text scoreText;
     public Text LivesText;
     public GameObject Paddle;
@@ -21,6 +23,8 @@ public class UiManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        combo = 1;
+        row = 0;
         Setup();
     }
 
@@ -56,7 +60,7 @@ public class UiManager : MonoBehaviour {
     }
 
 	public void IncrementScore(){
-		score++;
+        score += combo + row;
         bricks--;
 		scoreText.text = "Score: " + score;
         CheckOver();

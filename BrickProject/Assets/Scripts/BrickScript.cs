@@ -19,8 +19,8 @@ public class BrickScript : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col){
 		if (col.gameObject.tag == "Ball")
         {
-			ui.IncrementScore ();
-			Destroy (gameObject);
+			//ui.IncrementScore ();
+			//Destroy (gameObject);
 
             msc.Play();
 		}
